@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Um olho no centro de ondas de eco">
+  <g fill="none" stroke="#b3121b" stroke-linecap="round">
+    <path d="M100 8 a92 92 0 0 1 92 92" stroke-width="2.5" opacity=".35"/>
+    <path d="M100 192 a92 92 0 0 1 -92 -92" stroke-width="2.5" opacity=".35"/>
+    <path d="M100 24 a76 76 0 0 1 76 76 a76 76 0 0 1 -22 54" stroke-width="3" opacity=".55"/>
+    <path d="M100 176 a76 76 0 0 1 -76 -76 a76 76 0 0 1 22 -54" stroke-width="3" opacity=".55"/>
+    <circle cx="100" cy="100" r="58" stroke-width="3.5" stroke-dasharray="40 12 8 12" opacity=".8"/>
+  </g>
+  <path d="M46 100 C 66 70 134 70 154 100 C 134 130 66 130 46 100 Z" fill="#170507" stroke="#e8d6c4" stroke-width="3"/>
+  <circle cx="100" cy="100" r="19" fill="#b3121b"/>
+  <ellipse cx="100" cy="100" rx="5" ry="15" fill="#050203"/>
+  <circle cx="106" cy="93" r="3" fill="#ffe6e6" opacity=".8"/>
+  <g stroke="#e8d6c4" stroke-width="2" stroke-linecap="round" opacity=".7"><path d="M100 128 v14M86 126 l-4 12M114 126 l4 12"/></g>
+</svg>
