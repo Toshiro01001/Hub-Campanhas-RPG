@@ -5,14 +5,13 @@
             'breve'   → "Em Breve...", sem link nenhum
    selo / estadoTexto (opcionais): trocam o selo do quadro e a linha de estado do painel
    cor / fundo: cor de destaque e tom do fundo quando o quadro está selecionado
-   sistema / nota: textos curtos do painel (deixe '' para não mostrar nada) */
+   info: linhas do painel (sistema, lugar, ano...), na ordem em que devem aparecer; [] para não mostrar nada */
 window.CAMPANHAS = [
   {
     id: 'acf',
     nome: 'A Caixa de Fósforos',
     simbolo: 'img/acf.svg',
-    sistema: 'Ordem Paranormal',
-    nota: '',
+    info: ['Ordem Paranormal 1', 'Carcosa, MT - Brasil', '2039'],
     cor: '#a35fd0',
     fundo: '#170b22',
     estado: 'jogar',
@@ -22,8 +21,7 @@ window.CAMPANHAS = [
     id: 'crowsrest',
     nome: 'Crowsrest',
     simbolo: 'img/crowsrest.svg',
-    sistema: 'Candela Obscura',
-    nota: 'West Virginia, 1997',
+    info: ['Candela Obscura', 'West Virginia', '1997'],
     cor: '#d0453a',
     fundo: '#0d1726',
     estado: 'jogar',
@@ -33,8 +31,7 @@ window.CAMPANHAS = [
     id: 'cronicas-lua',
     nome: 'As Crônicas da Lua',
     simbolo: 'img/lua.svg',
-    sistema: 'D&D 5e',
-    nota: '',
+    info: ['D&D5E', 'Thalmyr, Continente humano do planeta Vaarus', '689 D.E.'],
     cor: '#c9d3e6',
     fundo: '#0b1220',
     estado: 'breve'
@@ -43,8 +40,7 @@ window.CAMPANHAS = [
     id: 'ecos-horror',
     nome: 'Ecos do Horror',
     simbolo: 'img/ecos-horror.svg',
-    sistema: 'Sistema em votação',
-    nota: 'Enquete aberta',
+    info: ['Sistema em votação', 'Isith, Continente Central de Gaia', '1715'],
     cor: '#d9202b',
     fundo: '#1a0507',
     estado: 'enquete',
@@ -55,8 +51,7 @@ window.CAMPANHAS = [
     nome: 'Ecos das Ruínas',
     subtitulo: 'A Trindade',
     simbolo: 'img/trindade.svg',
-    sistema: 'Hunter x Hunter 5e (homebrew)',
-    nota: '',
+    info: ['Hunter x Hunter 5e (Homebrew)', 'SATUS', '430 D.T.'],
     cor: '#e8c33a',
     fundo: '#141208',
     estado: 'jogar',
@@ -66,8 +61,7 @@ window.CAMPANHAS = [
     id: 'os-outros',
     nome: 'Os Outros',
     simbolo: 'img/os-outros.svg',
-    sistema: '',
-    nota: 'Enquete: querem uma continuação?',
+    info: ['Candela Obscura', 'San Antonio, TX', '2025'],
     cor: '#aab6c3',
     fundo: '#101317',
     estado: 'enquete',
@@ -79,8 +73,7 @@ window.CAMPANHAS = [
     id: 'brasas',
     nome: 'A Caixa de Fósforos: Brasas',
     simbolo: 'img/brasas.svg',
-    sistema: 'Ordem Paranormal',
-    nota: 'Continuação de A Caixa de Fósforos',
+    info: ['Ordem Paranormal 2', 'Continuação da Caixa de Fósforos', 'Carcosa/A Baixada/Chapada/Norte, MT - Brasil', '2139'],
     cor: '#ff8c1a',
     fundo: '#1c0d05',
     estado: 'breve'

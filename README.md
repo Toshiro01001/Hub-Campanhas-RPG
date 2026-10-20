@@ -11,7 +11,8 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
   - Quadros "Em breve" não têm link nenhum (são `div`, não `a`): ao clicar, só balançam.
   - Som do menu: botão 🔇/🔊 no topo, desligado por padrão, gerado pelo navegador (sem arquivos de áudio).
   - O site lembra a última campanha selecionada neste aparelho (`localStorage`, chave `hub-ultima`).
-- **dados.js**: a lista das campanhas. Para trocar nome, cor, link ou estado, edite só ele.
+- **dados.js**: a lista das campanhas. Para trocar nome, cor, link, estado ou as linhas de informação (`info`: sistema, lugar, ano), edite só ele.
+  - No computador as linhas de `info` aparecem no painel da direita; no celular e no tablet, dentro do próprio quadro.
   - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link.
   - Quando Brasas, As Crônicas da Lua ou Os Outros ficarem prontas: troque `estado` para `'jogar'` e acrescente `url`.
 - **enquete.html + enquete.js**: uma página só para todas as enquetes; o `?e=` do endereço escolhe qual abre.

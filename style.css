@@ -118,10 +118,10 @@ button { font: inherit; color: inherit; }
 
 /* em breve: sem link, apagado, com faixa */
 .tile.breve { cursor: default; }
-.tile.breve .tile-arte { filter: grayscale(.85) brightness(.55); }
-.tile.breve.ativa .tile-arte { filter: grayscale(.5) brightness(.75); }
-.tile-faixa {
-  position: absolute; left: -30%; right: -30%; top: 30%;
+.tile.breve .tile-arte img { filter: grayscale(.85) brightness(.55) drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+.tile.breve.ativa .tile-arte img { filter: grayscale(.5) brightness(.75) drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
+.tile-faixa { /* fica dentro da arte: a mesma posição no quadro quadrado e no cartão do celular */
+  position: absolute; left: -30%; right: -30%; top: 34%;
   transform: rotate(-12deg); text-align: center;
   font: 700 15px/1 var(--titulo); letter-spacing: .22em; text-transform: uppercase;
   padding: 7px 0; background: rgba(0,0,0,.78); color: var(--txt);
@@ -131,6 +131,18 @@ button { font: inherit; color: inherit; }
 @keyframes nega { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
 
 .dica-teclas { display: none; }
+
+/* linhas de informação (sistema, lugar, ano): no celular e no tablet ficam no próprio quadro,
+   porque lá não existe o painel da direita; no computador elas aparecem só no painel */
+.tile-info { display: none; }
+@media (max-width: 979px) {
+  .tile { aspect-ratio: auto; justify-content: flex-start; padding: 0 0 12px; }
+  .tile-arte { position: relative; inset: auto; aspect-ratio: 1 / 1; padding: 14px 12px 6px; overflow: visible; }
+  .tile-nome { padding: 0 10px; margin-top: 2px; }
+  .tile-info { display: block; padding: 6px 10px 0; color: var(--txt2); font: 12px/1.35 var(--corpo); overflow-wrap: break-word; }
+  .tile-info span { display: block; position: relative; padding-left: 9px; margin-top: 2px; }
+  .tile-info span::before { content: ''; position: absolute; left: 0; top: .62em; width: 5px; height: 2px; background: var(--tc); }
+}
 
 /* ---------- painel de detalhe (aparece do tablet para cima) ---------- */
 .detalhe { display: none; }

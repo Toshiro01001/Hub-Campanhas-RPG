@@ -17,6 +17,10 @@
   const ESTADO = { jogar: 'Disponível', enquete: 'Votação aberta', breve: 'Em breve...' };
   const BOTAO = { jogar: 'Jogar ▸', enquete: 'Votar ▸', breve: 'Em breve...' };
 
+  const infoDe = c => (Array.isArray(c.info) ? c.info : [c.sistema, c.nota]).filter(Boolean);
+  // deixa a linha quebrar depois de cada "/" (Carcosa/A Baixada/...) em vez de partir uma palavra no meio
+  const linha = t => esc(t).replace(/\//g, '/<wbr>');
+
   /* ---------- quadros ---------- */
   const grade = $('#grade');
   grade.innerHTML = LISTA.map((c, i) => {
@@ -27,9 +31,10 @@
       : `role="link" aria-disabled="true" tabindex="0"`;
     const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
     return `<${tag} class="tile ${c.estado === 'breve' ? 'breve' : ''}" data-id="${esc(c.id)}" ${attrs} aria-label="${esc(rotulo)}" style="--tc:${esc(c.cor)};--i:${i}">
-      <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false"></span>
-      ${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
+      <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false">${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : ''}</span>
+      ${c.estado === 'breve' ? '' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
       <span class="tile-nome" aria-hidden="true">${esc(c.nome)}</span>
+      ${infoDe(c).length ? `<span class="tile-info">${infoDe(c).map(t => `<span>${linha(t)}</span>`).join('')}</span>` : ''}
     </${tag}>`;
   }).join('');
   const tiles = [...grade.querySelectorAll('.tile')];
@@ -71,7 +76,7 @@
     $('#dEstado').textContent = c.estadoTexto || ESTADO[c.estado] || '';
     $('#dNome').textContent = c.nome;
     $('#dSub').textContent = c.subtitulo || '';
-    $('#dInfo').innerHTML = [c.sistema, c.nota].filter(Boolean).map(t => `<li>${esc(t)}</li>`).join('');
+    $('#dInfo').innerHTML = infoDe(c).map(t => `<li>${linha(t)}</li>`).join('');
     dBtn.textContent = BOTAO[c.estado] || '';
     if (c.estado !== 'breve' && c.url) { dBtn.href = c.url; dBtn.classList.remove('off'); dBtn.removeAttribute('aria-disabled'); dBtn.tabIndex = 0; }
     else { dBtn.removeAttribute('href'); dBtn.classList.add('off'); dBtn.setAttribute('aria-disabled', 'true'); dBtn.tabIndex = -1; }
