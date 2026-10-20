@@ -3,7 +3,7 @@
    - passar o mouse / focar um quadro troca a cor do fundo, o painel da direita e toca a música da campanha
    - computador: clique (ou Enter) entra direto; a música toca enquanto o mouse está em cima do quadro
    - celular: 1º toque seleciona e toca a música; 2º toque no mesmo quadro entra
-   - "Em breve" balança e não leva a lugar nenhum
+   - "Em breve" e "Finalizada" (sem site) balançam e não levam a lugar nenhum
    - abertura "Pressione qualquer tecla": o navegador só deixa tocar som depois de um clique/tecla/toque
    - botão 🔊/🔇 liga e desliga tudo (lembrado neste aparelho) */
 (() => {
@@ -17,10 +17,12 @@
   const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const TOQUE = window.matchMedia('(hover: none)').matches;
 
-  const SELO = { jogar: 'Jogar', enquete: 'Enquete', breve: '' };
-  const ESTADO = { jogar: 'Disponível', enquete: 'Votação aberta', breve: 'Em breve...' };
-  const BOTAO = { jogar: 'Jogar ▸', enquete: 'Votar ▸', breve: 'Em breve...' };
-  const DICA = { jogar: 'Toque de novo para jogar ▸', enquete: 'Toque de novo para votar ▸', breve: 'Em breve...' };
+  const SELO = { jogar: 'Jogar', enquete: 'Enquete', breve: '', finalizada: 'Finalizada' };
+  const ESTADO = { jogar: 'Disponível', enquete: 'Votação aberta', breve: 'Em breve...', finalizada: 'Campanha finalizada' };
+  const BOTAO = { jogar: 'Jogar ▸', enquete: 'Votar ▸', breve: 'Em breve...', finalizada: 'Campanha finalizada' };
+  const DICA = { jogar: 'Toque de novo para jogar ▸', enquete: 'Toque de novo para votar ▸', breve: 'Em breve...', finalizada: 'Campanha finalizada' };
+  // só 'jogar' e 'enquete' viram link; 'breve' e 'finalizada' não levam a lugar nenhum
+  const temLink = c => (c.estado === 'jogar' || c.estado === 'enquete') && !!c.url;
 
   const infoDe = c => (Array.isArray(c.info) ? c.info : [c.sistema, c.nota]).filter(Boolean);
   // deixa a linha quebrar depois de cada "/" (Carcosa/A Baixada/...) em vez de partir uma palavra no meio
@@ -29,17 +31,18 @@
   /* ---------- quadros ---------- */
   const grade = $('#grade');
   grade.innerHTML = LISTA.map((c, i) => {
-    const comLink = c.estado !== 'breve' && c.url;
+    const comLink = temLink(c);
     const tag = comLink ? 'a' : 'div';
     const attrs = comLink
       ? `href="${esc(c.url)}"`
       : `role="link" aria-disabled="true" tabindex="0"`;
-    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
-    return `<${tag} class="tile ${c.estado === 'breve' ? 'breve' : ''}" data-id="${esc(c.id)}" ${attrs} aria-label="${esc(rotulo)}" style="--tc:${esc(c.cor)};--i:${i}">
+    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'finalizada' ? ' (campanha finalizada)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
+    return `<${tag} class="tile ${c.estado === 'breve' ? 'breve' : ''} ${comLink ? '' : 'sem-link'}" data-id="${esc(c.id)}" ${attrs} aria-label="${esc(rotulo)}" style="--tc:${esc(c.cor)};--i:${i}">
       <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false">${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : ''}</span>
       ${c.estado === 'breve' ? '' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
       <span class="tile-nome" aria-hidden="true">${esc(c.nome)}</span>
       ${infoDe(c).length ? `<span class="tile-info">${infoDe(c).map(t => `<span>${linha(t)}</span>`).join('')}</span>` : ''}
+      ${c.descricao ? `<span class="tile-desc">${esc(c.descricao)}</span>` : ''}
       ${c.musica ? '<i class="tile-eq" aria-hidden="true"><b></b><b></b><b></b></i>' : ''}
       <span class="tile-dica" aria-hidden="true">${esc(DICA[c.estado] || '')}</span>
     </${tag}>`;
@@ -208,8 +211,9 @@
     $('#dNome').textContent = c.nome;
     $('#dSub').textContent = c.subtitulo || '';
     $('#dInfo').innerHTML = infoDe(c).map(t => `<li>${linha(t)}</li>`).join('');
+    $('#dDesc').textContent = c.descricao || '';
     dBtn.textContent = BOTAO[c.estado] || '';
-    if (c.estado !== 'breve' && c.url) { dBtn.href = c.url; dBtn.classList.remove('off'); dBtn.removeAttribute('aria-disabled'); dBtn.tabIndex = 0; }
+    if (temLink(c)) { dBtn.href = c.url; dBtn.classList.remove('off'); dBtn.removeAttribute('aria-disabled'); dBtn.tabIndex = 0; }
     else { dBtn.removeAttribute('href'); dBtn.classList.add('off'); dBtn.setAttribute('aria-disabled', 'true'); dBtn.tabIndex = -1; }
     det.classList.remove('troca'); void det.offsetWidth; det.classList.add('troca');
     if (comSom) bip('passa');
@@ -239,11 +243,11 @@
         selecionar(id); liberado = true; tocar(id);
         return;
       }
-      if (c.estado === 'breve') { e.preventDefault(); selecionar(c.id); negar(t); return; }
+      if (!temLink(c)) { e.preventDefault(); selecionar(c.id); negar(t); return; }
       bip('entra');
     });
     t.addEventListener('keydown', e => {
-      if ((e.key === 'Enter' || e.key === ' ') && t.classList.contains('breve')) { e.preventDefault(); negar(t); }
+      if ((e.key === 'Enter' || e.key === ' ') && t.classList.contains('sem-link')) { e.preventDefault(); negar(t); }
       if (e.key === ' ' && t.tagName === 'A') { e.preventDefault(); t.click(); }
     });
   });

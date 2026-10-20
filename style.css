@@ -117,7 +117,7 @@ button { font: inherit; color: inherit; }
 .tile.ativa .tile-arte { transform: scale(1.05); }
 
 /* em breve: sem link, apagado, com faixa */
-.tile.breve { cursor: default; }
+.tile.breve, .tile.sem-link { cursor: default; }
 .tile.breve .tile-arte img { filter: grayscale(.85) brightness(.55) drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
 .tile.breve.ativa .tile-arte img { filter: grayscale(.5) brightness(.75) drop-shadow(0 4px 10px rgba(0,0,0,.6)); }
 .tile-faixa { /* fica dentro da arte: a mesma posição no quadro quadrado e no cartão do celular */
@@ -134,7 +134,7 @@ button { font: inherit; color: inherit; }
 
 /* linhas de informação (sistema, lugar, ano): no celular e no tablet ficam no próprio quadro,
    porque lá não existe o painel da direita; no computador elas aparecem só no painel */
-.tile-info { display: none; }
+.tile-info, .tile-desc { display: none; }
 @media (max-width: 979px) {
   .tile { aspect-ratio: auto; justify-content: flex-start; padding: 0 0 12px; }
   .tile-arte { position: relative; inset: auto; aspect-ratio: 1 / 1; padding: 14px 12px 6px; overflow: visible; }
@@ -142,6 +142,7 @@ button { font: inherit; color: inherit; }
   .tile-info { display: block; padding: 6px 10px 0; color: var(--txt2); font: 12px/1.35 var(--corpo); overflow-wrap: break-word; }
   .tile-info span { display: block; position: relative; padding-left: 9px; margin-top: 2px; }
   .tile-info span::before { content: ''; position: absolute; left: 0; top: .62em; width: 5px; height: 2px; background: var(--tc); }
+  .tile-desc { display: block; padding: 8px 10px 0; color: var(--txt2); font: italic 12px/1.4 var(--corpo); opacity: .9; }
 }
 
 /* ---------- música: equalizador no quadro que está tocando + dica do 2º toque (celular) ---------- */
@@ -160,7 +161,7 @@ button { font: inherit; color: inherit; }
   font: 700 12px/1.15 var(--titulo); letter-spacing: .08em; text-transform: uppercase;
   background: var(--tc); color: #0b0b0e;
 }
-.tile.breve.armada .tile-dica { background: rgba(255,255,255,.08); color: var(--txt2); border: 1px dashed var(--borda); }
+.tile.sem-link.armada .tile-dica { background: rgba(255,255,255,.08); color: var(--txt2); border: 1px dashed var(--borda); }
 @media (min-width: 980px) { .tile.armada .tile-dica { position: absolute; left: 0; right: 0; bottom: 8px; margin: 0 8px; } }
 
 /* ---------- abertura "Pressione qualquer tecla" ---------- */
@@ -233,6 +234,8 @@ button { font: inherit; color: inherit; }
   .detalhe-sub:empty { display: none; }
   .detalhe-info { list-style: none; margin: 14px 0 0; padding: 0; color: var(--txt2); }
   .detalhe-info li { padding: 2px 0 2px 14px; position: relative; }
+  .detalhe-desc { margin: 12px 0 0; color: var(--txt2); font-style: italic; line-height: 1.45; max-width: 46ch; }
+  .detalhe-desc:empty { display: none; }
   .detalhe-info li::before { content: ''; position: absolute; left: 0; top: .72em; width: 6px; height: 2px; background: var(--c); }
   .detalhe-btn {
     margin-top: 22px; align-self: stretch; text-align: center; text-decoration: none;
