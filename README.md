@@ -10,13 +10,15 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
   - Celular: 1º toque seleciona o quadro e toca a música (aparece "Toque de novo para jogar ▸"); 2º toque no mesmo quadro entra. Tocar fora dos quadros para a música.
   - Teclado: setas/Tab escolhem (e tocam a música); Enter entra.
   - Cada música volta de onde parou; o quadro que está tocando mostra um equalizador no canto.
-  - Quadros "Em breve" não têm link nenhum (são `div`, não `a`): ao clicar, só balançam.
+  - Quadros "Em breve" e "Finalizada" sem site não têm link nenhum (são `div`, não `a`): ao clicar, só balançam.
   - Botão 🔊/🔇 no topo liga e desliga música e efeitos (lembrado neste aparelho, chave `hub-som`).
   - O site lembra a última campanha selecionada neste aparelho (`localStorage`, chave `hub-ultima`).
 - **musica/**: uma faixa por campanha (MP3 96 kbps, volume igualado). Trocar a música = substituir o arquivo com o mesmo nome, ou mudar o campo `musica` no `dados.js`.
 - **dados.js**: a lista das campanhas. Para trocar nome, cor, link, estado ou as linhas de informação (`info`: sistema, lugar, ano), edite só ele.
   - No computador as linhas de `info` aparecem no painel da direita; no celular e no tablet, dentro do próprio quadro.
-  - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link.
+  - A ordem dos quadros é a ordem da lista.
+  - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link; `'finalizada'` mostra o selo "Finalizada" sem link (campanha encerrada que não tem site).
+  - `descricao` (opcional): uma frase sobre a campanha, abaixo das linhas de `info`.
   - Quando Brasas, As Crônicas da Lua ou Os Outros ficarem prontas: troque `estado` para `'jogar'` e acrescente `url`.
 - **enquete.html + enquete.js**: uma página só para todas as enquetes; o `?e=` do endereço escolhe qual abre.
   - `enquete.html?e=ecos-horror`: Ecos do Horror (sistema de RPG e reboot). Sem `?e=`, abre esta.
