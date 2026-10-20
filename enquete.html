@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Enquete</title>
+  <meta name="theme-color" content="#0b0b10">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261020b">
+</head>
+<body class="enquete">
+  <div class="fundo" aria-hidden="true"><div class="fundo-brilho"></div><div class="fundo-linhas"></div></div>
+
+  <header class="topo">
+    <a class="voltar" href="./">◂ Menu</a>
+  </header>
+
+  <main class="enq">
+    <div class="enq-cab">
+      <img id="eImg" src="" alt="">
+      <div>
+        <p id="eKicker">Enquete</p>
+        <h1 id="eTitulo"></h1>
+      </div>
+    </div>
+
+    <p class="enq-modo" id="modo" role="status"></p>
+
+    <form id="form" novalidate>
+      <div id="perguntas"></div>
+
+      <label class="campo-nome">
+        <span>Seu nome (opcional, aparece para quem já votou)</span>
+        <input type="text" id="nome" maxlength="40" autocomplete="nickname" placeholder="Ex.: o nome do seu personagem">
+      </label>
+
+      <button type="submit" class="btn-votar" id="btnVotar" disabled>Confirmar voto</button>
+      <p class="enq-aviso" id="aviso" aria-live="polite"></p>
+    </form>
+
+    <section class="resultado" id="resultado" hidden aria-live="polite">
+      <h2>Resultado parcial</h2>
+      <div id="resBlocos"></div>
+      <p class="res-total" id="resTotal"></p>
+      <p class="res-total" id="resNomes"></p>
+      <button type="button" class="btn-mudar" id="btnMudar">Mudar meu voto</button>
+    </section>
+  </main>
+
+  <script src="config.js?v=20261020b"></script>
+  <script src="enquete.js?v=20261020b"></script>
+</body>
+</html>

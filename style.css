@@ -211,7 +211,7 @@ button { font: inherit; color: inherit; }
 /* =====================================================================
    ENQUETE (enquete.html)
    ===================================================================== */
-body.enquete { --c: #d9202b; --f: #1a0507; }
+body.enquete { --ct: #ffffff; }
 .voltar {
   display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
   font: 600 13px/1 var(--titulo); letter-spacing: .18em; text-transform: uppercase; color: var(--txt2);
@@ -223,6 +223,7 @@ body.enquete { --c: #d9202b; --f: #1a0507; }
 .enq-cab img { width: 76px; height: 76px; flex: none; }
 .enq-cab p { margin: 0; font: 600 11px/1 var(--titulo); letter-spacing: .3em; text-transform: uppercase; color: var(--c); }
 .enq-cab h1 { margin: 4px 0 0; font: 700 28px/1.05 var(--titulo); text-transform: uppercase; }
+@media (max-width: 419px) { .enq-cab p { letter-spacing: .16em; } }
 .enq-modo { margin: 0 0 16px; padding: 10px 12px; border-radius: 8px; font-size: 13px; color: var(--txt2); background: rgba(255,255,255,.04); border: 1px solid var(--borda); }
 .enq-modo.erro { color: #ffd0d0; border-color: #a33; background: rgba(160, 30, 30, .15); }
 .enq-modo:empty { display: none; }
@@ -247,7 +248,7 @@ body.enquete { --c: #d9202b; --f: #1a0507; }
 }
 .btn-votar {
   width: 100%; padding: 15px; border: 0; border-radius: 8px; cursor: pointer;
-  background: var(--c); color: #fff; font: 700 17px/1 var(--titulo); letter-spacing: .2em; text-transform: uppercase;
+  background: var(--c); color: var(--ct, #fff); font: 700 17px/1 var(--titulo); letter-spacing: .2em; text-transform: uppercase;
 }
 .btn-votar:disabled { opacity: .45; cursor: not-allowed; }
 .enq-aviso { min-height: 1.4em; margin: 10px 0 0; font-size: 13px; color: var(--txt2); }
