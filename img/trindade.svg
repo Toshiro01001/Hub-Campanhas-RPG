@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="A Trindade: três anéis entrelaçados">
+  <circle cx="100" cy="100" r="94" fill="none" stroke="#c9b37a" stroke-width="2" opacity=".6"/>
+  <circle cx="100" cy="100" r="86" fill="none" stroke="#c9b37a" stroke-width="1" opacity=".35"/>
+  <g fill="none" stroke-width="7">
+    <circle cx="100" cy="74" r="38" stroke="#3fb56b"/>
+    <circle cx="77" cy="114" r="38" stroke="#d6403a"/>
+    <circle cx="123" cy="114" r="38" stroke="#e8c33a"/>
+  </g>
+  <g fill="none" stroke="#0c0c0c" stroke-width="2.4" opacity=".55">
+    <circle cx="100" cy="74" r="38"/><circle cx="77" cy="114" r="38"/><circle cx="123" cy="114" r="38"/>
+  </g>
+  <path d="M100 82 L121 118 L79 118 Z" fill="#f4ecd2" stroke="#c9b37a" stroke-width="2"/>
+  <circle cx="100" cy="106" r="4.5" fill="#1a1a1a"/>
+</svg>
