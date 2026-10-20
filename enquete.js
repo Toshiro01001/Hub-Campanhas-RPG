@@ -1,37 +1,83 @@
-/* enquete.js · enquete de Ecos do Horror
+/* enquete.js · enquetes do menu (uma página só, várias enquetes)
+   - qual enquete abre: enquete.html?e=<id>  (sem ?e= abre a de Ecos do Horror)
    - com Firebase (config.js preenchido): login anônimo, 1 voto por aparelho/navegador, pode mudar o voto,
      resultado ao vivo para quem já votou
-   - sem Firebase (config.js = null): modo local, o voto fica só neste aparelho */
+   - sem Firebase (config.js = null): modo local, o voto fica só neste aparelho
+   Para criar outra enquete: acrescente um item em ENQUETES e o bloco correspondente em regras-firebase-hub.json */
 (() => {
   'use strict';
-  const $ = s => document.querySelector(s);
-  const CAMINHO = 'hub/enquetes/ecosDoHorror/votos';
-  const CHAVE_LOCAL = 'hub-enquete-ecosDoHorror';
-  const SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
-  const OPC = {
-    sistema: [['tormenta', 'Tormenta'], ['dnd5e', 'D&D5E'], ['op2', 'Ordem Paranormal 2'], ['candela', 'Candela Obscura']],
-    reboot: [['sim', 'Sim'], ['nao', 'Não']]
+  const ENQUETES = {
+    'ecos-horror': {
+      titulo: 'Ecos do Horror',
+      simbolo: 'img/ecos-horror.svg',
+      cor: '#d9202b', fundo: '#1a0507', corTexto: '#ffffff',
+      no: 'ecosDoHorror',
+      perguntas: [
+        { campo: 'sistema', texto: 'Sistema de RPG',
+          opcoes: [['tormenta', 'Tormenta'], ['dnd5e', 'D&D5E'], ['op2', 'Ordem Paranormal 2'], ['candela', 'Candela Obscura']] },
+        { campo: 'reboot', texto: 'Vocês querem OUTRO reboot dessa campanha? e finalmente terminá-la?',
+          opcoes: [['sim', 'Sim'], ['nao', 'Não']] }
+      ]
+    },
+    'os-outros': {
+      titulo: 'Os Outros',
+      kicker: 'Campanha finalizada · Enquete',
+      simbolo: 'img/os-outros.svg',
+      cor: '#aab6c3', fundo: '#101317', corTexto: '#0b0b0e',
+      no: 'osOutros',
+      perguntas: [
+        { campo: 'continuacao', texto: 'Querem uma continuação 👀?',
+          opcoes: [['sim', 'Sim'], ['nao', 'Não']] }
+      ]
+    }
   };
+
+  const $ = s => document.querySelector(s);
+  const id = new URLSearchParams(location.search).get('e');
+  const E = ENQUETES[id] || ENQUETES['ecos-horror'];
+  const CAMINHO = `hub/enquetes/${E.no}/votos`;
+  const CHAVE_LOCAL = `hub-enquete-${E.no}`;
+  const SDK = 'https://www.gstatic.com/firebasejs/10.12.2/';
+  const CAMPOS = E.perguntas.map(p => p.campo);
   const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const ls = {
     get(k, p) { try { const v = localStorage.getItem(k); return v === null ? p : JSON.parse(v); } catch (e) { return p; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   };
 
+  /* ---------- monta a página da enquete escolhida ---------- */
+  document.title = `${E.titulo} · Enquete`;
+  const raiz = document.documentElement.style;
+  raiz.setProperty('--c', E.cor); raiz.setProperty('--f', E.fundo); raiz.setProperty('--ct', E.corTexto);
+  const meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.content = E.fundo;
+  $('#eImg').src = E.simbolo;
+  $('#eKicker').textContent = E.kicker || 'Enquete';
+  $('#eTitulo').textContent = E.titulo;
+  $('#perguntas').innerHTML = E.perguntas.map(p => `
+    <fieldset class="pergunta">
+      <legend>${esc(p.texto)}</legend>
+      <div class="opcoes ${p.opcoes.length === 4 ? 'quatro' : ''}">
+        ${p.opcoes.map(([v, rot]) => `<label class="opcao"><input type="radio" name="${esc(p.campo)}" value="${esc(v)}"><span>${esc(rot)}</span></label>`).join('')}
+      </div>
+    </fieldset>`).join('');
+  $('#resBlocos').innerHTML = E.perguntas.map(p => `<div class="res-bloco"><h3>${esc(p.texto)}</h3><div data-res="${esc(p.campo)}"></div></div>`).join('');
+  const msgFalta = E.perguntas.length > 1 ? 'Escolha uma opção em cada pergunta.' : 'Escolha uma opção.';
+
   const form = $('#form'), btn = $('#btnVotar'), aviso = $('#aviso'), modo = $('#modo'), res = $('#resultado');
   let votos = {}, meuUid = null, ref = null, pronto = false;
+  aviso.textContent = msgFalta;
 
   const escolha = nome => { const i = form.querySelector(`input[name="${nome}"]:checked`); return i ? i.value : null; };
   const validar = () => {
-    const ok = pronto && !!escolha('sistema') && !!escolha('reboot');
+    const ok = pronto && CAMPOS.every(c => !!escolha(c));
     btn.disabled = !ok;
-    if (pronto) aviso.textContent = ok ? '' : 'Escolha uma opção em cada pergunta.';
+    if (pronto) aviso.textContent = ok ? '' : msgFalta;
   };
   form.addEventListener('change', validar);
 
   function preencher(v) {
     if (!v) return;
-    ['sistema', 'reboot'].forEach(k => { const i = form.querySelector(`input[name="${k}"][value="${v[k]}"]`); if (i) i.checked = true; });
+    CAMPOS.forEach(k => { const i = form.querySelector(`input[name="${k}"][value="${v[k]}"]`); if (i) i.checked = true; });
     $('#nome').value = v.nome || '';
     validar();
   }
@@ -52,8 +98,7 @@
     const meu = meuUid ? votos[meuUid] : null;
     if (!meu) { res.hidden = true; form.hidden = false; return; }
     form.hidden = true; res.hidden = false;
-    barras($('#resSistema'), OPC.sistema, 'sistema', meu);
-    barras($('#resReboot'), OPC.reboot, 'reboot', meu);
+    E.perguntas.forEach(p => barras(res.querySelector(`[data-res="${p.campo}"]`), p.opcoes, p.campo, meu));
     const total = Object.keys(votos).length;
     $('#resTotal').textContent = `${total} voto${total === 1 ? '' : 's'} no total.`;
     const nomes = Object.values(votos).map(v => v && v.nome).filter(Boolean);
@@ -65,15 +110,16 @@
 
   $('#btnMudar').addEventListener('click', () => {
     res.hidden = true; form.hidden = false; preencher(meuUid ? votos[meuUid] : null);
-    form.querySelector('input[name="sistema"]:checked, input[name="sistema"]').focus();
+    const p = CAMPOS[0];
+    form.querySelector(`input[name="${p}"]:checked, input[name="${p}"]`).focus();
   });
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const sistema = escolha('sistema'), reboot = escolha('reboot');
-    if (!sistema || !reboot || !pronto) { validar(); return; }
+    if (!pronto || !CAMPOS.every(c => !!escolha(c))) { validar(); return; }
+    const voto = { ts: Date.now() };
+    CAMPOS.forEach(c => { voto[c] = escolha(c); });
     const nome = $('#nome').value.trim().replace(/\s+/g, ' ').slice(0, 40);
-    const voto = { sistema, reboot, ts: Date.now() };
     if (nome) voto.nome = nome;
     btn.disabled = true; aviso.textContent = 'Enviando…';
     try {

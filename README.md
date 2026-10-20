@@ -14,7 +14,10 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
 - **dados.js**: a lista das campanhas. Para trocar nome, cor, link ou estado, edite só ele.
   - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link.
   - Quando Brasas, As Crônicas da Lua ou Os Outros ficarem prontas: troque `estado` para `'jogar'` e acrescente `url`.
-- **enquete.html + enquete.js**: enquete de Ecos do Horror (duas perguntas, nome opcional).
+- **enquete.html + enquete.js**: uma página só para todas as enquetes; o `?e=` do endereço escolhe qual abre.
+  - `enquete.html?e=ecos-horror`: Ecos do Horror (sistema de RPG e reboot). Sem `?e=`, abre esta.
+  - `enquete.html?e=os-outros`: Os Outros, campanha finalizada (querem uma continuação?).
+  - Nova enquete: um item em `ENQUETES` (enquete.js) + o bloco dela em `regras-firebase-hub.json`.
   - Com Firebase configurado: login anônimo, um voto por navegador, dá para mudar o voto, resultado ao vivo depois de votar.
   - Sem Firebase (`config.js` com `null`): modo local, o voto fica só no aparelho de quem votou.
 - **img/**: símbolos em SVG (`acf.svg` é o Sigilo do Eco; `crowsrest.svg` é o selo do Xerife; os demais são novos).
@@ -28,7 +31,7 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
 5. Authentication → Settings → Domínios autorizados → adicionar `toshiro01001.github.io`.
 6. Configurações do projeto → Seus apps → app Web → copiar o `firebaseConfig` para `config.js` (precisa ter `databaseURL`).
 
-Para zerar a enquete: Realtime Database → apagar o nó `hub/enquetes/ecosDoHorror/votos`.
+Para zerar uma enquete: Realtime Database → apagar o nó `hub/enquetes/ecosDoHorror/votos` ou `hub/enquetes/osOutros/votos`.
 
 ## Limites conhecidos
 

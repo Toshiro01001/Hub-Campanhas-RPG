@@ -25,10 +25,10 @@
     const attrs = comLink
       ? `href="${esc(c.url)}"`
       : `role="link" aria-disabled="true" tabindex="0"`;
-    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'enquete' ? ' (enquete)' : '');
+    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
     return `<${tag} class="tile ${c.estado === 'breve' ? 'breve' : ''}" data-id="${esc(c.id)}" ${attrs} aria-label="${esc(rotulo)}" style="--tc:${esc(c.cor)};--i:${i}">
       <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false"></span>
-      ${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : `<span class="tile-selo" aria-hidden="true">${SELO[c.estado] || ''}</span>`}
+      ${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
       <span class="tile-nome" aria-hidden="true">${esc(c.nome)}</span>
     </${tag}>`;
   }).join('');
@@ -68,7 +68,7 @@
     document.documentElement.style.setProperty('--f', c.fundo);
     tiles.forEach(t => t.classList.toggle('ativa', t.dataset.id === id));
     $('#dImg').src = c.simbolo;
-    $('#dEstado').textContent = ESTADO[c.estado] || '';
+    $('#dEstado').textContent = c.estadoTexto || ESTADO[c.estado] || '';
     $('#dNome').textContent = c.nome;
     $('#dSub').textContent = c.subtitulo || '';
     $('#dInfo').innerHTML = [c.sistema, c.nota].filter(Boolean).map(t => `<li>${esc(t)}</li>`).join('');

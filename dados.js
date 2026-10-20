@@ -3,6 +3,7 @@
    estado:  'jogar'   → o quadro é um link e abre a campanha (url)
             'enquete' → o quadro abre a página da enquete (url)
             'breve'   → "Em Breve...", sem link nenhum
+   selo / estadoTexto (opcionais): trocam o selo do quadro e a linha de estado do painel
    cor / fundo: cor de destaque e tom do fundo quando o quadro está selecionado
    sistema / nota: textos curtos do painel (deixe '' para não mostrar nada) */
 window.CAMPANHAS = [
@@ -47,7 +48,7 @@ window.CAMPANHAS = [
     cor: '#d9202b',
     fundo: '#1a0507',
     estado: 'enquete',
-    url: 'enquete.html'
+    url: 'enquete.html?e=ecos-horror'
   },
   {
     id: 'ecos-ruinas',
@@ -66,10 +67,13 @@ window.CAMPANHAS = [
     nome: 'Os Outros',
     simbolo: 'img/os-outros.svg',
     sistema: '',
-    nota: '',
+    nota: 'Enquete: querem uma continuação?',
     cor: '#aab6c3',
     fundo: '#101317',
-    estado: 'breve'
+    estado: 'enquete',
+    selo: 'Finalizada',
+    estadoTexto: 'Campanha finalizada',
+    url: 'enquete.html?e=os-outros'
   },
   {
     id: 'brasas',
