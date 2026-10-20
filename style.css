@@ -144,6 +144,42 @@ button { font: inherit; color: inherit; }
   .tile-info span::before { content: ''; position: absolute; left: 0; top: .62em; width: 5px; height: 2px; background: var(--tc); }
 }
 
+/* ---------- música: equalizador no quadro que está tocando + dica do 2º toque (celular) ---------- */
+.tile-eq {
+  position: absolute; top: 9px; left: 10px; z-index: 2;
+  display: none; align-items: flex-end; gap: 2px; height: 14px; padding: 3px 5px; box-sizing: content-box;
+  background: rgba(0,0,0,.6); border-radius: 4px;
+}
+.tile-eq b { display: block; width: 3px; background: var(--tc); border-radius: 1px; animation: eq .9s ease-in-out infinite; }
+.tile-eq b:nth-child(2) { animation-delay: -.3s; } .tile-eq b:nth-child(3) { animation-delay: -.6s; }
+@keyframes eq { 0%, 100% { height: 4px; } 50% { height: 14px; } }
+.tile.tocando .tile-eq { display: inline-flex; }
+.tile-dica { display: none; }
+.tile.armada .tile-dica {
+  display: block; position: relative; z-index: 2; margin: 10px 10px 0; padding: 8px 6px; border-radius: 6px; text-align: center;
+  font: 700 12px/1.15 var(--titulo); letter-spacing: .08em; text-transform: uppercase;
+  background: var(--tc); color: #0b0b0e;
+}
+.tile.breve.armada .tile-dica { background: rgba(255,255,255,.08); color: var(--txt2); border: 1px dashed var(--borda); }
+@media (min-width: 980px) { .tile.armada .tile-dica { position: absolute; left: 0; right: 0; bottom: 8px; margin: 0 8px; } }
+
+/* ---------- abertura "Pressione qualquer tecla" ---------- */
+.abertura {
+  position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 24px 16px;
+  background: radial-gradient(70% 60% at 50% 45%, rgba(40, 32, 20, .55), rgba(5, 5, 8, .97) 70%), rgba(5, 5, 8, .93);
+  backdrop-filter: blur(4px); cursor: pointer; transition: opacity .4s ease;
+}
+.abertura[hidden] { display: none; }
+.abertura.saindo { opacity: 0; pointer-events: none; }
+.abertura-caixa { text-align: center; max-width: 760px; }
+.abertura-caixa img { width: 64px; height: 64px; margin: 0 auto 16px; }
+.abertura-kicker { margin: 0; font: 600 12px/1 var(--titulo); letter-spacing: .35em; text-transform: uppercase; color: #e8c33a; }
+.abertura-titulo { margin: 8px 0 0; font: 700 clamp(30px, 8vw, 54px)/1.02 var(--titulo); text-transform: uppercase; letter-spacing: .03em; }
+.abertura-pisca { margin: 34px 0 0; font: 600 16px/1.2 var(--titulo); letter-spacing: .32em; text-transform: uppercase; color: var(--txt); animation: pisca 1.6s ease-in-out infinite; }
+@keyframes pisca { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+.abertura-mudo { margin-top: 28px; background: transparent; border: 1px solid var(--borda); border-radius: 999px; padding: 8px 14px; font-size: 13px; color: var(--txt2); cursor: pointer; }
+.abertura-mudo:hover { color: var(--txt); border-color: rgba(255,255,255,.35); }
+
 /* ---------- painel de detalhe (aparece do tablet para cima) ---------- */
 .detalhe { display: none; }
 

@@ -5,12 +5,15 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
 ## Como funciona
 
 - **index.html + app.js**: monta os quadros a partir de `dados.js`.
-  - Passar o mouse (ou focar com Tab/setas) num quadro troca a cor do fundo e o painel da direita (computador).
-  - No celular não há painel: os quadros ficam em 2 colunas e o toque entra direto.
-  - Setas do teclado andam pela grade; Enter entra.
+  - Abertura "Pressione qualquer tecla" / "Toque para começar": o navegador só libera som depois de um gesto, então a tela de abertura existe para destravar a música. "Entrar sem som" desliga o som (lembrado neste aparelho); com o som desligado, a abertura não aparece.
+  - Computador: mouse em cima de um quadro = fundo, painel da direita e **música da campanha**; tirou o mouse, a música para (fade). Em cima do painel da direita a música continua. Clique entra direto.
+  - Celular: 1º toque seleciona o quadro e toca a música (aparece "Toque de novo para jogar ▸"); 2º toque no mesmo quadro entra. Tocar fora dos quadros para a música.
+  - Teclado: setas/Tab escolhem (e tocam a música); Enter entra.
+  - Cada música volta de onde parou; o quadro que está tocando mostra um equalizador no canto.
   - Quadros "Em breve" não têm link nenhum (são `div`, não `a`): ao clicar, só balançam.
-  - Som do menu: botão 🔇/🔊 no topo, desligado por padrão, gerado pelo navegador (sem arquivos de áudio).
+  - Botão 🔊/🔇 no topo liga e desliga música e efeitos (lembrado neste aparelho, chave `hub-som`).
   - O site lembra a última campanha selecionada neste aparelho (`localStorage`, chave `hub-ultima`).
+- **musica/**: uma faixa por campanha (MP3 96 kbps, volume igualado). Trocar a música = substituir o arquivo com o mesmo nome, ou mudar o campo `musica` no `dados.js`.
 - **dados.js**: a lista das campanhas. Para trocar nome, cor, link, estado ou as linhas de informação (`info`: sistema, lugar, ano), edite só ele.
   - No computador as linhas de `info` aparecem no painel da direita; no celular e no tablet, dentro do próprio quadro.
   - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link.

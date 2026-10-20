@@ -5,10 +5,12 @@
             'breve'   → "Em Breve...", sem link nenhum
    selo / estadoTexto (opcionais): trocam o selo do quadro e a linha de estado do painel
    cor / fundo: cor de destaque e tom do fundo quando o quadro está selecionado
+   musica: faixa que toca com o mouse em cima do quadro (ou ao tocar nele no celular); '' para nenhuma
    info: linhas do painel (sistema, lugar, ano...), na ordem em que devem aparecer; [] para não mostrar nada */
 window.CAMPANHAS = [
   {
     id: 'acf',
+    musica: 'musica/acf.mp3',
     nome: 'A Caixa de Fósforos',
     simbolo: 'img/acf.svg',
     info: ['Ordem Paranormal 1', 'Carcosa, MT - Brasil', '2039'],
@@ -19,6 +21,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'crowsrest',
+    musica: 'musica/crowsrest.mp3',
     nome: 'Crowsrest',
     simbolo: 'img/crowsrest.svg',
     info: ['Candela Obscura', 'West Virginia', '1997'],
@@ -29,6 +32,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'cronicas-lua',
+    musica: 'musica/cronicas-lua.mp3',
     nome: 'As Crônicas da Lua',
     simbolo: 'img/lua.svg',
     info: ['D&D5E', 'Thalmyr, Continente humano do planeta Vaarus', '689 D.E.'],
@@ -38,6 +42,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'ecos-horror',
+    musica: 'musica/ecos-horror.mp3',
     nome: 'Ecos do Horror',
     simbolo: 'img/ecos-horror.svg',
     info: ['Sistema em votação', 'Isith, Continente Central de Gaia', '1715'],
@@ -48,6 +53,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'ecos-ruinas',
+    musica: 'musica/ecos-ruinas.mp3',
     nome: 'Ecos das Ruínas',
     subtitulo: 'A Trindade',
     simbolo: 'img/trindade.svg',
@@ -59,6 +65,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'os-outros',
+    musica: 'musica/os-outros.mp3',
     nome: 'Os Outros',
     simbolo: 'img/os-outros.svg',
     info: ['Candela Obscura', 'San Antonio, TX', '2025'],
@@ -71,6 +78,7 @@ window.CAMPANHAS = [
   },
   {
     id: 'brasas',
+    musica: 'musica/brasas.mp3',
     nome: 'A Caixa de Fósforos: Brasas',
     simbolo: 'img/brasas.svg',
     info: ['Ordem Paranormal 2', 'Continuação da Caixa de Fósforos', 'Carcosa/A Baixada/Chapada/Norte, MT - Brasil', '2139'],
