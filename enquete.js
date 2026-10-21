@@ -9,7 +9,7 @@
   const ENQUETES = {
     'ecos-horror': {
       titulo: 'Ecos do Horror',
-      simbolo: 'img/ecos-horror.svg',
+      simbolo: 'img/ecos-horror.svg?v=20261021b',
       cor: '#d9202b', fundo: '#1a0507', corTexto: '#ffffff',
       no: 'ecosDoHorror',
       perguntas: [
