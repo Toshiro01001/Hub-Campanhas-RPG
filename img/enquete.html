@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ecos do Horror · Enquete</title>
+  <meta name="theme-color" content="#1a0507">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261020a">
+</head>
+<body class="enquete">
+  <div class="fundo" aria-hidden="true"><div class="fundo-brilho"></div><div class="fundo-linhas"></div></div>
+
+  <header class="topo">
+    <a class="voltar" href="./">◂ Menu</a>
+  </header>
+
+  <main class="enq">
+    <div class="enq-cab">
+      <img src="img/ecos-horror.svg" alt="">
+      <div>
+        <p>Enquete</p>
+        <h1>Ecos do Horror</h1>
+      </div>
+    </div>
+
+    <p class="enq-modo" id="modo" role="status"></p>
+
+    <form id="form" novalidate>
+      <fieldset class="pergunta">
+        <legend>Sistema de RPG</legend>
+        <div class="opcoes quatro">
+          <label class="opcao"><input type="radio" name="sistema" value="tormenta"><span>Tormenta</span></label>
+          <label class="opcao"><input type="radio" name="sistema" value="dnd5e"><span>D&amp;D5E</span></label>
+          <label class="opcao"><input type="radio" name="sistema" value="op2"><span>Ordem Paranormal 2</span></label>
+          <label class="opcao"><input type="radio" name="sistema" value="candela"><span>Candela Obscura</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="pergunta">
+        <legend>Vocês querem OUTRO reboot dessa campanha? e finalmente terminá-la?</legend>
+        <div class="opcoes">
+          <label class="opcao"><input type="radio" name="reboot" value="sim"><span>Sim</span></label>
+          <label class="opcao"><input type="radio" name="reboot" value="nao"><span>Não</span></label>
+        </div>
+      </fieldset>
+
+      <label class="campo-nome">
+        <span>Seu nome (opcional, aparece para quem já votou)</span>
+        <input type="text" id="nome" maxlength="40" autocomplete="nickname" placeholder="Ex.: o nome do seu personagem">
+      </label>
+
+      <button type="submit" class="btn-votar" id="btnVotar" disabled>Confirmar voto</button>
+      <p class="enq-aviso" id="aviso" aria-live="polite">Escolha uma opção em cada pergunta.</p>
+    </form>
+
+    <section class="resultado" id="resultado" hidden aria-live="polite">
+      <h2>Resultado parcial</h2>
+      <div class="res-bloco"><h3>Sistema de RPG</h3><div id="resSistema"></div></div>
+      <div class="res-bloco"><h3>Vocês querem OUTRO reboot dessa campanha? e finalmente terminá-la?</h3><div id="resReboot"></div></div>
+      <p class="res-total" id="resTotal"></p>
+      <p class="res-total" id="resNomes"></p>
+      <button type="button" class="btn-mudar" id="btnMudar">Mudar meu voto</button>
+    </section>
+  </main>
+
+  <script src="config.js?v=20261020b"></script>
+  <script src="enquete.js?v=20261020a"></script>
+</body>
+</html>
