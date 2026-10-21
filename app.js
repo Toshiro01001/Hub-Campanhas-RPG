@@ -36,22 +36,22 @@
     const attrs = comLink
       ? `href="${esc(c.url)}"`
       : `role="link" aria-disabled="true" tabindex="0"`;
-    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' ? ' (em breve)' : c.estado === 'finalizada' ? ' (campanha finalizada)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
+    const rotulo = c.nome + (c.subtitulo ? ', ' + c.subtitulo : '') + (c.estado === 'breve' || c.emBreve ? ' (em breve)' : c.estado === 'finalizada' ? ' (campanha finalizada)' : c.estado === 'enquete' ? ` (${c.estadoTexto ? c.estadoTexto.toLowerCase() + ', ' : ''}enquete)` : '');
     return `<${tag} class="tile ${c.estado === 'breve' ? 'breve' : ''} ${comLink ? '' : 'sem-link'}" data-id="${esc(c.id)}" ${attrs} aria-label="${esc(rotulo)}" style="--tc:${esc(c.cor)};--i:${i}">
-      <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false">${c.estado === 'breve' ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : ''}</span>
-      ${c.estado === 'breve' ? '' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
+      <span class="tile-arte"><img src="${esc(c.simbolo)}" alt="" loading="eager" draggable="false">${c.estado === 'breve' || c.emBreve ? '<span class="tile-faixa" aria-hidden="true">Em Breve...</span>' : ''}</span>
+      ${c.estado === 'breve' || c.emBreve ? '' : `<span class="tile-selo" aria-hidden="true">${esc(c.selo || SELO[c.estado] || '')}</span>`}
       <span class="tile-nome" aria-hidden="true">${esc(c.nome)}</span>
       ${infoDe(c).length ? `<span class="tile-info">${infoDe(c).map(t => `<span>${linha(t)}</span>`).join('')}</span>` : ''}
       ${c.descricao ? `<span class="tile-desc">${esc(c.descricao)}</span>` : ''}
       ${c.musica ? '<i class="tile-eq" aria-hidden="true"><b></b><b></b><b></b></i>' : ''}
-      <span class="tile-dica" aria-hidden="true">${esc(DICA[c.estado] || '')}</span>
+      <span class="tile-dica" aria-hidden="true">${esc(c.botao ? 'Toque de novo: ' + c.botao : (DICA[c.estado] || ''))}</span>
     </${tag}>`;
   }).join('');
   const tiles = [...grade.querySelectorAll('.tile')];
   const porId = id => LISTA.find(c => c.id === id);
   const tileDe = id => tiles.find(t => t.dataset.id === id);
 
-  const n = LISTA.filter(c => c.estado === 'jogar').length;
+  const n = LISTA.filter(c => c.estado === 'jogar' && !c.emBreve).length;
   $('#contagem').textContent = `${LISTA.length} campanhas · ${n} disponíve${n === 1 ? 'l' : 'is'}`;
 
   /* ---------- áudio: um AudioContext para os bips e para as músicas ---------- */
@@ -212,7 +212,7 @@
     $('#dSub').textContent = c.subtitulo || '';
     $('#dInfo').innerHTML = infoDe(c).map(t => `<li>${linha(t)}</li>`).join('');
     $('#dDesc').textContent = c.descricao || '';
-    dBtn.textContent = BOTAO[c.estado] || '';
+    dBtn.textContent = c.botao || BOTAO[c.estado] || '';
     if (temLink(c)) { dBtn.href = c.url; dBtn.classList.remove('off'); dBtn.removeAttribute('aria-disabled'); dBtn.tabIndex = 0; }
     else { dBtn.removeAttribute('href'); dBtn.classList.add('off'); dBtn.setAttribute('aria-disabled', 'true'); dBtn.tabIndex = -1; }
     det.classList.remove('troca'); void det.offsetWidth; det.classList.add('troca');

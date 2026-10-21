@@ -18,6 +18,7 @@ Site estático (GitHub Pages) que funciona como o "menu principal" das campanhas
   - No computador as linhas de `info` aparecem no painel da direita; no celular e no tablet, dentro do próprio quadro.
   - A ordem dos quadros é a ordem da lista.
   - `estado: 'jogar'` abre `url`; `'enquete'` abre a página da enquete; `'breve'` mostra "Em Breve..." sem link; `'finalizada'` mostra o selo "Finalizada" sem link (campanha encerrada que não tem site).
+  - `emBreve: true` (opcional): faixa "Em Breve..." num quadro que já tem site, sem tirar o link (é o caso de Crowsrest). Para tirar o link também, troque `estado` para `'breve'`.
   - `descricao` (opcional): uma frase sobre a campanha, abaixo das linhas de `info`.
   - Quando Brasas, As Crônicas da Lua ou Os Outros ficarem prontas: troque `estado` para `'jogar'` e acrescente `url`.
 - **enquete.html + enquete.js**: uma página só para todas as enquetes; o `?e=` do endereço escolhe qual abre.

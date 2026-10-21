@@ -5,6 +5,8 @@
             'breve'   → "Em Breve...", sem link nenhum
             'finalizada' → campanha encerrada e sem site: selo "Finalizada", sem link nenhum
    selo / estadoTexto (opcionais): trocam o selo do quadro e a linha de estado do painel
+   emBreve (opcional): põe a faixa "Em Breve..." num quadro que JÁ tem site; o link continua funcionando
+   botao (opcional): troca o texto do botão do painel (e a dica do 2º toque no celular)
    cor / fundo: cor de destaque e tom do fundo quando o quadro está selecionado
    musica: faixa que toca com o mouse em cima do quadro (ou ao tocar nele no celular); '' para nenhuma
    descricao (opcional): uma frase sobre a campanha, abaixo das linhas de info
@@ -51,6 +53,9 @@ window.CAMPANHAS = [
     cor: '#d0453a',
     fundo: '#0d1726',
     estado: 'jogar',
+    emBreve: true,
+    estadoTexto: 'Em breve...',
+    botao: 'Ver o site ▸',
     url: 'https://toshiro01001.github.io/Crowrest/'
   },
 {
