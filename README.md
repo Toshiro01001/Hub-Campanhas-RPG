@@ -44,3 +44,7 @@ Para zerar uma enquete: Realtime Database → apagar o nó `hub/enquetes/ecosDoH
 
 - "Um voto por navegador": quem abrir em aba anônima ou em outro aparelho vota de novo. O nome é declarado pela própria pessoa.
 - As fontes vêm do Google Fonts; sem internet, o site usa fontes do sistema.
+
+---
+
+Desenvolvido por Rodrigo Terroso Junior. O Claude, da Anthropic, foi usado como ferramenta durante o desenvolvimento.
